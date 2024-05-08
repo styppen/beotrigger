@@ -1,0 +1,21 @@
+[Unit]
+Description=Beotrigger
+After=multi-user.target
+Requires=snapclient.service
+
+[Service]
+ExecStart=/usr/bin/python3 /home/styppen/beotrigger/beotrigger.py
+WorkingDirectory=/home/styppen/beotrigger
+Restart=always
+User=styppen
+# Note: setting PYTHONUNBUFFERED is necessary to see the output of this service in the journal
+# See https://docs.python.org/2/using/cmdline.html#envvar-PYTHONUNBUFFERED
+Environment=PYTHONUNBUFFERED=true
+Type=notify
+NotifyAccess=all
+
+# restart service if 3 watchdogs are missed
+WatchdogSec=30
+
+[Install]
+WantedBy=multi-user.target
